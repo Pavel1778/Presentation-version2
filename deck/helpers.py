@@ -26,6 +26,85 @@ def blank(prs):
     return prs.slides.add_slide(prs.slide_layouts[6])
 
 
+# --- decorative backgrounds -------------------------------------------------
+def dot_grid(slide, color, x, y, w, h, step=0.42, dot=0.045, alpha=None):
+    """A field of small dots - a light texture that reads as 'data'."""
+    cx = x
+    while cx <= x + w:
+        cy = y
+        while cy <= y + h:
+            rect(slide, cx, cy, dot, dot, fill=color, shape=MSO_SHAPE.OVAL)
+            cy += step
+        cx += step
+
+
+def ribbon(slide, x, y, w, h, color, angle=0):
+    """A soft diagonal band used as a background element."""
+    from pptx.enum.shapes import MSO_SHAPE as _S
+    sh = slide.shapes.add_shape(_S.PARALLELOGRAM, Inches(x), Inches(y),
+                                Inches(w), Inches(h))
+    sh.fill.solid()
+    sh.fill.fore_color.rgb = rgb(color)
+    sh.line.fill.background()
+    sh.shadow.inherit = False
+    sh.rotation = angle
+    return sh
+
+
+def corner_arcs(slide, color, cx, cy, radii, weight=2.0):
+    """Concentric quarter-arcs fanning from a corner."""
+    for r in radii:
+        sh = slide.shapes.add_shape(MSO_SHAPE.BLOCK_ARC, Inches(cx - r),
+                                    Inches(cy - r), Inches(2 * r),
+                                    Inches(2 * r))
+        sh.fill.background()
+        sh.line.color.rgb = rgb(color)
+        sh.line.width = Pt(weight)
+        sh.shadow.inherit = False
+    return slide
+
+
+def halftone(slide, color, x, y, cols=8, rows=4, step=0.34, max_d=0.30,
+             big_left=True):
+    """A halftone corner: dots that grow toward one corner (visual weight)."""
+    for r in range(rows):
+        for c in range(cols):
+            fx = c / (cols - 1)
+            fy = r / (rows - 1)
+            t = (1 - fx) if big_left else fx
+            t = t * (1 - fy * 0.35) + 0.1
+            d = max_d * max(0.12, t)
+            rect(slide, x + c * step + (max_d - d) / 2,
+                 y + r * step + (max_d - d) / 2, d, d,
+                 fill=color, shape=MSO_SHAPE.OVAL)
+    return slide
+
+
+def triangle_corner(slide, color, x, y, size, flip=False):
+    sh = slide.shapes.add_shape(MSO_SHAPE.RIGHT_TRIANGLE, Inches(x),
+                                Inches(y), Inches(size), Inches(size))
+    sh.fill.solid()
+    sh.fill.fore_color.rgb = rgb(color)
+    sh.line.fill.background()
+    sh.shadow.inherit = False
+    if flip:
+        sh.rotation = 90
+    return sh
+
+
+def waffle(slide, x, y, pct, fill, base, cols=10, rows=10, cell=0.235,
+           gap=0.065):
+    """An isotype grid: `pct` of 100 unit squares filled, top-left first."""
+    n = cols * rows
+    filled = int(round(n * pct / 100.0))
+    for i in range(n):
+        r, c = divmod(i, cols)
+        col = fill if i < filled else base
+        rect(slide, x + c * (cell + gap), y + r * (cell + gap), cell, cell,
+             fill=col, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.22)
+    return slide
+
+
 # --- background -------------------------------------------------------------
 def fill_bg(slide, color=T.BG_LIGHT):
     bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0,

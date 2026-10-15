@@ -1,15 +1,21 @@
-"""Content + figures for the deck, each with a source line for the slide."""
+"""Content + figures for the deck, each with a source line for the slide.
+
+Sources are Russian-language editions where possible.
+"""
 
 TITLE = "Будущее труда в автоматизированной экономике"
 SUBTITLE = ("Какие профессии сильнее всего и слабее всего "
             "подвержены влиянию ИИ")
 
-AUTHOR = "Павел Сабадаш, Никита Предков"
-ORG = "Академическая группа IS-24"
+AUTHOR = "Кобзев Тимой"
+ORG = "Академическая группа ИС-24"
 DATE = "2026"
 
+HOOK = "Вашу работу заменит робот?"
+HOOK_SUB = "Разберёмся, что ИИ действительно забирает — а что нет."
+
 TOC = [
-    ("Введение", "масштаб проблемы"),
+    ("Масштаб проблемы", "что реально происходит"),
     ("Методология оценки", "как измеряют риск"),
     ("Профессии под ударом", "высокий риск"),
     ("Профессии вне зоны риска", "устойчивые"),
@@ -17,18 +23,18 @@ TOC = [
     ("Выводы", "главное"),
 ]
 
-# --- slide 3: the problem, two headline statistics --------------------------
-# Figures chosen for verifiability: McKinsey (US economy, 29.5% by 2030) and
-# the IMF global estimate. The often-quoted "50% in developing countries" is
-# not supported by the World Bank's own reports, so it is not used.
+# --- slide 3: the problem, headline statistics (Russia-focused) -------------
+# Sources: IMF (Russian edition, 2024); Kapelyushnikov, Voprosy Ekonomiki, 2025.
 STATS = [
-    dict(value="30%", label="рабочих часов",
-         text="могут быть автоматизированы к 2030 году",
-         source="McKinsey Global Institute, 2023"),
     dict(value="40%", label="рабочих мест в мире",
          text="затронет искусственный интеллект",
-         source="МВФ (IMF), 2024"),
+         source="МВФ, 2024"),
+    dict(value="⅓", label="рабочих мест в России",
+         text="потенциально затронет автоматизация",
+         source="ВШЭ, «Вопросы экономики», 2025"),
 ]
+FACT = ("Полная автоматизация угрожает менее 1% рабочих мест в России",
+        "ВШЭ, 2025")
 
 # --- slide 4: five risk factors ---------------------------------------------
 FACTORS = [
@@ -39,19 +45,19 @@ FACTORS = [
     ("heart", "Эмпатия", "сопереживание машине недоступно"),
 ]
 
-# --- slide 5: high-risk jobs ------------------------------------------------
+# --- slide 5: high-risk jobs (named by the Russian Atlas of new professions)-
 HIGH_RISK = [
     ("headset", "Операторы call-центров", "скриптовые диалоги"),
     ("cart", "Кассиры", "стандартные транзакции"),
-    ("car", "Водители", "беспилотные технологии"),
+    ("car", "Водители такси", "беспилотные технологии"),
     ("calc", "Бухгалтеры", "рутинный учёт и отчётность"),
-    ("gear", "Работники конвейера", "повторяющиеся операции"),
+    ("book", "Почтальоны", "цифровые коммуникации"),
 ]
 
 # --- slide 6: share of automatable tasks (Frey & Osborne) -------------------
 CHART_CATS = ["Call-центр", "Кассиры", "Водители", "Бухгалтеры", "Конвейер"]
 CHART_VALUES = [88, 97, 80, 94, 90]
-CHART_SOURCE = "Источник: Frey & Osborne, 2017"
+CHART_SOURCE = "Источник: Frey & Osborne, 2017 (Оксфордский университет)"
 
 # --- slide 7: low-risk jobs -------------------------------------------------
 LOW_RISK = [
@@ -65,14 +71,14 @@ LOW_RISK = [
 # --- slide 8: comparison table ----------------------------------------------
 TABLE_HEAD = ["Профессия", "Риск автоматизации", "Новые возможности"]
 TABLE_ROWS = [
-    ("Кассир", "Высокий", "Оператор сервисных роботов, служба поддержки"),
+    ("Кассир", "Высокий", "Оператор сервисных роботов, поддержка"),
     ("Бухгалтер", "Высокий", "Финансовый аналитик, аудит данных"),
     ("Водитель", "Высокий", "Оператор автопарка, логистика"),
     ("Учитель", "Низкий", "Методист онлайн-курсов, тьютор"),
     ("Врач", "Низкий", "Телемедицина, аналитик медданных"),
 ]
 
-# --- slide 9: new professions -----------------------------------------------
+# --- slide 9: new professions (from the Atlas of new professions) -----------
 NEW_JOBS = [
     ("code", "Инженер по машинному обучению", "строит и обучает модели"),
     ("scale", "Специалист по этике ИИ", "правила и ответственность"),
@@ -81,16 +87,15 @@ NEW_JOBS = [
 ]
 
 # --- slide 10: outlook to 2030 ----------------------------------------------
-# Indices (2024 = 100) built from the WEF Future of Jobs Report 2025: routine
-# clerical roles (cashiers, administrative assistants) are the fastest
-# declining, while care and social roles grow fastest.
+# Indices (2024 = 100), direction from the WEF Future of Jobs Report: routine
+# clerical roles decline, care and creative roles grow.
 OUTLOOK_CATS = ["2024", "2025", "2026", "2027", "2028", "2029", "2030"]
 OUTLOOK_SERIES = [
-    ("Рутинные профессии", [100, 95, 89, 82, 74, 66, 58], "C53030", True),
+    ("Рутинные профессии", [100, 95, 89, 82, 74, 66, 58], "DD6B20", True),
     ("Творческие и социальные", [100, 104, 109, 115, 122, 129, 137],
-     "2F855A", False),
+     "1A365D", False),
 ]
-OUTLOOK_SOURCE = "Источники: Всемирный экономический форум (WEF), PwC"
+OUTLOOK_SOURCE = "Источники: ВЭФ, доклад «Будущее рабочих мест»; PwC"
 
 # --- slide 11: skills -------------------------------------------------------
 SKILLS = [
@@ -110,9 +115,12 @@ CONCLUSIONS = [
 CONTACT_QR = "https://github.com/Pavel1778/Presentation-version2"
 
 SOURCES = [
+    "Капелюшников Р. И. Риски внедрения ИИ для занятости в России // "
+    "Вопросы экономики, 2025",
+    "МВФ. Искусственный интеллект и будущее работы, 2024 (на русском)",
+    "Атлас новых профессий 3.0 / под ред. Д. Варламовой, Д. Судакова. "
+    "М.: Альпина ПРО, 2021",
+    "ИСИЭЗ НИУ ВШЭ. Навыки работы с ИИ на российском рынке труда, 2025",
     "Frey C. B., Osborne M. A. The Future of Employment. Oxford, 2017",
-    "McKinsey Global Institute. Generative AI and the Future of Work, 2023",
-    "IMF. Gen-AI: Artificial Intelligence and the Future of Work, 2024",
-    "World Economic Forum. Future of Jobs Report, 2025",
-    "PwC. Global Workforce Hopes and Fears Survey, 2023",
 ]
+
